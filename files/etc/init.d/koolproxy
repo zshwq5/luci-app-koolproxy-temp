@@ -180,7 +180,8 @@ add_rule() {
 	iptables -t nat -N KOOLPROXY_HTTPS_GLO 2>/dev/null
 	iptables -t nat -N KOOLPROXY_HTTPS_ADB 2>/dev/null
 	#获取SHADOWSOCKS规则行号
-	SS_INDEX=`iptables -t nat -L PREROUTING|tail -n +3|sed -n -e '/^SHADOWSOCKS/='`
+	#SS_INDEX=`iptables -t nat -L PREROUTING|tail -n +3|sed -n -e '/^SHADOWSOCKS/='`
+	SS_INDEX=`iptables -t nat -L PREROUTING|tail -n +3|sed -n -e '/^shadowsocks/='`   #有规则使用小写
 	if [ -n "$SS_INDEX" ]; then
 		let SS_INDEX+=1
 	else
@@ -193,7 +194,7 @@ add_rule() {
 	#创建所需的ipset
 	IPSET_ADB="adblock"
 	ipset -! create $IPSET_ADB nethash && ipset -! add $IPSET_ADB 110.110.110.110 2>/dev/null
-	sed -e "s/^/add $IPSET_ADB &/g" /etc/adblocklist/adblockip | awk '{print $0} END{print "COMMIT"}' | ipset -R 2>/dev/null
+	sed -e "s/^/add $IPSET_ADB &/g" /usr/share/koolproxy/adblockip | awk '{print $0} END{print "COMMIT"}' | ipset -R 2>/dev/null
 	#生成代理规则
 	#  忽略特殊IP段
 	iptables_ext A KOOLPROXY "-d 0.0.0.0/8 -j RETURN"
