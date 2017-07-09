@@ -47,4 +47,6 @@ opkg install http://firmware.koolshare.cn/binary/KoolProxy/luci/luci-i18n-koolpr
 2017年03月31日 17:01, koolproxy 3.3.6
 
 ## LUCI更新日志：
-2017年07月09日 15:05, koolproxy 3.6.1    二进制文件编译时压缩后不能正常启动，不断重启。解决。。。。。。
+2017年07月09日 15:05, koolproxy 3.6.1   
+统一文件路径，防止同名并相应改名，与ADBYBY同存在需要合并一个conf文件路径。
+二进制文件编译时压缩后不能正常启动，不断重启。解决。。。。。。（临时：不编译二进制文件，复制到相应路径并给予权限）
