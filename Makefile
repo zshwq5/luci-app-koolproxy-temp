@@ -64,29 +64,29 @@ define Package/luci-app-koolproxy/install
 	$(INSTALL_DATA) ./files/usr/lib/lua/luci/i18n/koolproxy.zh-cn.lmo $(1)/usr/lib/lua/luci/i18n/koolproxy.zh-cn.lmo
 	$(INSTALL_BIN) ./files/usr/sbin/* $(1)/usr/share/koolproxy/
 	$(INSTALL_DATA) ./files/usr/share/koolproxy/data/certs/* $(1)/usr/share/koolproxy/data/certs
-	$(INSTALL_BIN) ./files/usr/share/koolproxy/data/gen_ca.sh $(1)/usr/share/koolproxy/data/
-	$(INSTALL_DATA) ./files/usr/share/koolproxy/data/openssl.cnf $(1)/usr/share/koolproxy/data/
+	#$(INSTALL_BIN) ./files/usr/share/koolproxy/data/gen_ca.sh $(1)/usr/share/koolproxy/data/
+	#$(INSTALL_DATA) ./files/usr/share/koolproxy/data/openssl.cnf $(1)/usr/share/koolproxy/data/
 	$(INSTALL_DATA) ./files/usr/share/koolproxy/data/rules/* $(1)/usr/share/koolproxy/data/rules/
 	$(INSTALL_BIN) ./files/usr/share/koolproxy/camanagement $(1)/usr/share/koolproxy/camanagement
 	$(INSTALL_BIN) ./files/usr/share/koolproxy/firewall.include $(1)/usr/share/koolproxy/firewall.include
 	$(INSTALL_BIN) ./files/usr/share/koolproxy/koolproxyupdate.sh $(1)/usr/share/koolproxy/koolproxyupdate.sh
 	$(INSTALL_DATA) ./files/usr/share/koolproxy/adblock.conf $(1)/usr/share/koolproxy/adblock.conf
 	$(INSTALL_DATA) ./files/usr/share/koolproxy/dnsmasq.adblock $(1)/usr/share/koolproxy/dnsmasq.adblock
-ifeq ($(ARCH),mipsel)
-	$(INSTALL_BIN) ./files/bin/mipsel $(1)/usr/share/koolproxy/koolproxy
-endif
-ifeq ($(ARCH),mips)
-	$(INSTALL_BIN) ./files/bin/mips $(1)/usr/share/koolproxy/koolproxy
-endif
-ifeq ($(ARCH),i386)
-	$(INSTALL_BIN) ./files/bin/i386 $(1)/usr/share/koolproxy/koolproxy
-endif
-ifeq ($(ARCH),x86_64)
-	$(INSTALL_BIN) ./files/bin/x86_64 $(1)/usr/share/koolproxy/koolproxy
-endif
-ifeq ($(ARCH),arm)
-	$(INSTALL_BIN) ./files/bin/arm $(1)/usr/share/koolproxy/koolproxy
-endif
+#ifeq ($(ARCH),mipsel)
+#	$(INSTALL_BIN) ./files/bin/mipsel $(1)/usr/share/koolproxy/koolproxy
+#endif
+#ifeq ($(ARCH),mips)
+#	$(INSTALL_BIN) ./files/bin/mips $(1)/usr/share/koolproxy/koolproxy
+#endif
+#ifeq ($(ARCH),i386)
+#	$(INSTALL_BIN) ./files/bin/i386 $(1)/usr/share/koolproxy/koolproxy
+#endif
+#ifeq ($(ARCH),x86_64)
+#	$(INSTALL_BIN) ./files/bin/x86_64 $(1)/usr/share/koolproxy/koolproxy
+#endif
+#ifeq ($(ARCH),arm)
+#	$(INSTALL_BIN) ./files/bin/arm $(1)/usr/share/koolproxy/koolproxy
+#endif
 endef
 
 $(eval $(call BuildPackage,luci-app-koolproxy))
