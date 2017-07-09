@@ -4,8 +4,6 @@ local e=require("luci.model.ipkg")
 local e=luci.model.uci.cursor()
 local n=require"luci.sys"
 local d=luci.http
---local g=require"luci.sys"
---local r,r,q
 local e
 local e="1.7"
 local r="koolproxy"
@@ -16,12 +14,6 @@ local u=luci.sys.exec("head -4 /usr/share/koolproxy/data/rules/koolproxy.txt | g
 local l=luci.sys.exec("grep -v !x /usr/share/koolproxy/data/rules/koolproxy.txt | wc -l")
 local i=luci.sys.exec("cat /usr/share/koolproxy/dnsmasq.adblock | wc -l")
 local h=luci.sys.exec("grep -v '^!' /usr/share/koolproxy/data/rules/user.txt | wc -l")
-
---if g.call("pidof koolproxy >/dev/null")==0 then
---q="<strong><font color=\"green\">koolproxy 运行中</font></strong>"
---else
---q="<strong><font color=\"red\">koolproxy 未运行</font></strong>"
---end
 
 local function is_running(name)
 	return luci.sys.call("pidof %s >/dev/null" %{name}) == 0
