@@ -114,14 +114,15 @@ gen_ca() {
 	if [ ! -f "/usr/share/koolproxy/data/certs/ca.crt" ]||[ ! -f "/usr/share/koolproxy/data/private/ca.key.pem" ];then
 		rm -rf /usr/share/koolproxy/data/private
 		rm -rf /usr/share/koolproxy/data/certs/ca.crt
-		/usr/share/koolproxy/data/gen_ca.sh >/dev/null 2>&1
+		#/usr/share/koolproxy/data/gen_ca.sh >/dev/null 2>&1  #删除之前生成证书方式可减少固件体积
+		/usr/share/koolproxy/koolproxy --cert    #3.6.0以上版本支持自生成证书功能,参数: --cert
 	fi
 }
 
 stop_dnsmasq() {
 	adenable=$(config_t_get global enabled)
 	if [ "$adenable" == "0" ];then
-		sed -i '/koolproxyupdate\.sh/d' /etc/crontabs/root >/dev/null 2>&1
+		sed -i '/koolproxy/d' /etc/crontabs/root >/dev/null 2>&1
 		rm /tmp/dnsmasq.d/adblock.conf
 		/etc/init.d/dnsmasq restart
 	fi
@@ -166,8 +167,9 @@ add_koolproxy_cru() {
 	time=$(config_t_get global time_update)
 	wirtecron=$(cat /etc/crontabs/root | grep "00 $time * * *" | grep koolproxy)
 	if [ -z "$wirtecron" ];then
-		sed -i '/koolproxyupdate/d' /etc/crontabs/root >/dev/null 2>&1
-		echo "0 $time * * * /usr/share/koolproxy/koolproxyupdate.sh" >> /etc/crontabs/root 
+		sed -i '/koolproxy/d' /etc/crontabs/root >/dev/null 2>&1
+		echo "1 $time * * * /usr/share/koolproxy/koolproxyupdate.sh" >> /etc/crontabs/root
+		echo "8 */12 * * * /usr/share/koolproxy/koolproxy start" >> /etc/crontabs/root  #每隔12小时重启
 	fi
 }
 
