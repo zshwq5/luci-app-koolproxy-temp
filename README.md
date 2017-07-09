@@ -46,4 +46,5 @@ opkg install http://firmware.koolshare.cn/binary/KoolProxy/luci/luci-i18n-koolpr
 ## LUCI更新日志：
 2017年03月31日 17:01, koolproxy 3.3.6
 
-
+## LUCI更新日志：
+2017年07月09日 15:05, koolproxy 3.6.1    二进制文件编译时压缩后不能正常启动，不断重启。解决。。。。。。
