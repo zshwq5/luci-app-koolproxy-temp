@@ -114,7 +114,7 @@ UpdateRule(){
 
 UpdateHost()
 {
-	/usr/sbin/adblockplus >>$LOGFILE 2>&1 &
+	/usr/share/koolproxy/adblockplus.sh >>$LOGFILE 2>&1 &
 	echo >>$LOGFILE
 }
 
