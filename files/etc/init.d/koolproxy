@@ -114,7 +114,7 @@ gen_ca() {
 	if [ ! -f "/usr/share/koolproxy/data/certs/ca.crt" ]||[ ! -f "/usr/share/koolproxy/data/private/ca.key.pem" ];then
 		rm -rf /usr/share/koolproxy/data/private
 		rm -rf /usr/share/koolproxy/data/certs/ca.crt
-		#/usr/share/koolproxy/data/gen_ca.sh >/dev/null 2>&1  #删除之前生成证书方式可减少固件体积
+		#/usr/share/koolproxy/data/gen_ca.sh >/dev/null 2>&1  #删除之前生成证书方式可减少固件体积,不依赖openssl
 		/usr/share/koolproxy/koolproxy --cert    #3.6.0以上版本支持自生成证书功能,参数: --cert
 	fi
 }
