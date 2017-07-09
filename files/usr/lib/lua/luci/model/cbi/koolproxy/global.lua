@@ -71,7 +71,7 @@ restart.inputtitle=translate("Update manually")
 restart.inputstyle="reload"
 restart.write=function()
 	--luci.sys.call("/usr/share/koolproxy/koolproxyupdate rules 2>&1 >/dev/null")
-	luci.sys.call("/usr/share/koolproxy/koolproxyupdate 2>&1 >/dev/null")
+	luci.sys.call("/usr/share/koolproxy/koolproxyupdate.sh 2>&1 >/dev/null")
 	luci.http.redirect(luci.dispatcher.build_url("admin","services","koolproxy"))
 end
 
@@ -113,7 +113,7 @@ if nixio.fs.access("/usr/share/koolproxy/data/certs/ca.crt")then
 		luci.http.redirect(luci.dispatcher.build_url("admin","services","koolproxy"))
 	end
 end
-local i="/etc/adblocklist/adblock"
+local i="/usr/share/koolproxy/adblock"
 e=t:taboption("weblist",TextValue,"configfile")
 e.description=translate("These had been joined websites will use filter,but only blacklist model.Please input the domain names of websites,every line can input only one website domain.For example,google.com.")
 e.rows=28
@@ -123,13 +123,13 @@ e.cfgvalue=function(t,t)
 end
 e.write=function(t,t,e)
 	a.writefile("/tmp/adblock",e:gsub("\r\n","\n"))
-	if(luci.sys.call("cmp -s /tmp/adblock /etc/adblocklist/adblock")==1)then
+	if(luci.sys.call("cmp -s /tmp/adblock /usr/share/koolproxy/adblock")==1)then
 		a.writefile(i,e:gsub("\r\n","\n"))
-		luci.sys.call("/usr/sbin/adblock 2>&1 >/dev/null")
+		luci.sys.call("/usr/share/koolproxy/adblock.sh 2>&1 >/dev/null")
 	end
 	a.remove("/tmp/adblock")
 end
-local i="/etc/adblocklist/adblockip"
+local i="/usr/share/koolproxy/adblockip"
 e=t:taboption("iplist",TextValue,"adconfigfile")
 e.description=translate("These had been joined ip addresses will use proxy,but only GFW model.Please input the ip address or ip address segment,every line can input only one ip address.For example,112.123.134.145/24 or 112.123.134.145.")
 e.rows=28
