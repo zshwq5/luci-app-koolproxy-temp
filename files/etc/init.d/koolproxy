@@ -169,7 +169,7 @@ add_koolproxy_cru() {
 	if [ -z "$wirtecron" ];then
 		sed -i '/koolproxy/d' /etc/crontabs/root >/dev/null 2>&1
 		echo "1 $time * * * /usr/share/koolproxy/koolproxyupdate.sh" >> /etc/crontabs/root
-		echo "8 */12 * * * /usr/share/koolproxy/koolproxy start" >> /etc/crontabs/root  #每隔12小时重启
+		echo "8 */12 * * * /usr/share/koolproxy/koolproxy restart" >> /etc/crontabs/root  #每隔12小时重启
 	fi
 }
 
