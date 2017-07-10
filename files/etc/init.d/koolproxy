@@ -129,6 +129,7 @@ gen_ca() {
 stop_dnsmasq() {
 	adenable=$(config_t_get global enabled)
 	if [ "$adenable" == "0" ];then
+		#sed -i '/userlist\.sh/d' /etc/crontabs/root >/dev/null 2>&1
 		sed -i '/koolproxy/d' /etc/crontabs/root >/dev/null 2>&1
 		rm /tmp/dnsmasq.d/adblock.conf
 		/etc/init.d/dnsmasq restart
@@ -176,8 +177,10 @@ add_koolproxy_cru() {
 	wirtecron=$(cat /etc/crontabs/root | grep "00 $time * * *" | grep koolproxy)
 	if [ -z "$wirtecron" ];then
 		sed -i '/koolproxy/d' /etc/crontabs/root >/dev/null 2>&1
+		#sed -i '/userlist\.sh/d' /etc/crontabs/root >/dev/null 2>&1
 		echo "1 $time * * * /usr/share/koolproxy/koolproxyupdate.sh" >> /etc/crontabs/root
 		echo "8 */12 * * * /usr/share/koolproxy/koolproxy restart" >> /etc/crontabs/root  #每隔12小时重启
+		#echo "18 1 * * * /usr/share/koolproxy/userlist.sh >> /var/log/koolproxy.log" >> /etc/crontabs/root
 	fi
 }
 
