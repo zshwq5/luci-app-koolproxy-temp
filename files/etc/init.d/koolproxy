@@ -109,6 +109,13 @@ add_dnsmasq() {
 		/etc/init.d/dnsmasq restart
 	fi
 }
+# 加入 vokins 去广告 需要生成userlist.conf并适时更新
+add_dnsmasqU() {
+	if [ ! -f "/tmp/dnsmasq.d/userlist.conf" ];then
+		ln -s /usr/share/koolproxy/userlist.conf /tmp/dnsmasq.d/userlist.conf
+		/etc/init.d/dnsmasq restart
+	fi
+}
 
 gen_ca() {
 	if [ ! -f "/usr/share/koolproxy/data/certs/ca.crt" ]||[ ! -f "/usr/share/koolproxy/data/private/ca.key.pem" ];then
@@ -135,6 +142,7 @@ get_action_chain() {
 			;;
 		global)
 			echo "KOOLPROXY_GLO"
+			#add_dnsmasqU   #暂时需要观察是否稳定
 			;;
 		adblock)
 			echo "KOOLPROXY_ADB"
