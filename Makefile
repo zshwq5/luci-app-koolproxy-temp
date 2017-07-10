@@ -72,6 +72,8 @@ define Package/luci-app-koolproxy/install
 	$(INSTALL_BIN) ./files/usr/share/koolproxy/koolproxyupdate.sh $(1)/usr/share/koolproxy/koolproxyupdate.sh
 	$(INSTALL_DATA) ./files/usr/share/koolproxy/adblock.conf $(1)/usr/share/koolproxy/adblock.conf
 	$(INSTALL_DATA) ./files/usr/share/koolproxy/dnsmasq.adblock $(1)/usr/share/koolproxy/dnsmasq.adblock
+	#$(INSTALL_DATA) ./files/usr/share/koolproxy/userlist.conf $(1)/usr/share/koolproxy/userlist.conf
+	#$(INSTALL_BIN) ./files/usr/share/koolproxy/userlist.sh $(1)/usr/share/koolproxy/userlist.sh
 #ifeq ($(ARCH),mipsel)
 #	$(INSTALL_BIN) ./files/bin/mipsel $(1)/usr/share/koolproxy/koolproxy
 #endif
