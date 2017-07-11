@@ -21,7 +21,7 @@ config_t_get() {
 Reduce_Log(){
 	local log=$1
 	[ ! -f "$log" ] && return
-	local sc=100
+	local sc=50
 	[ -n "$2" ] && sc=$2
 	local count=$(grep -c "" $log)
 	if [ $count -gt $sc ];then
