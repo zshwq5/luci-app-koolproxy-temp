@@ -5,4 +5,4 @@ rm -f /tmp/adblock.conf
 rm -f /tmp/dnsmasq.d/adblock.conf
 ln -s /usr/share/koolproxy/adblock.conf /tmp/dnsmasq.d/adblock.conf
 ipset -F adblock
-/etc/init.d/dnsmasq restart
+/etc/init.d/dnsmasq restart >/dev/null 2>&1
