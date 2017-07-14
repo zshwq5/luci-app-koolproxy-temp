@@ -19,14 +19,13 @@ config_t_get() {
 }
 
 Reduce_Log(){
-	local log=$1
-	[ ! -f "$log" ] && return
-	local sc=50
-	[ -n "$2" ] && sc=$2
-	local count=$(grep -c "" $log)
-	if [ $count -gt $sc ];then
-		let count=count-$sc
-		sed -i "1,$count d" $log
+	logsnum=$(cat $LOGFILE|grep -c .)
+	if [ $logsnum -gt 100 ]; then
+	rm -f $LOGFILE >/dev/null 2>&1 &
+	if [ ! -f "$LOGFILE" ]; then
+		touch $LOGFILE
+	fi
+	echo "$(date "+%F %T") ........................." >> $LOGFILE
 	fi
 }
 
@@ -173,7 +172,7 @@ UpdateApp()
 
 # 程序主体
 InitEnv
-Reduce_Log $LOGFILE
+Reduce_Log
 #version="$TEMPPATH/version"
 #wget-ssl -qT5 --no-check-certificate "$SERVERURL/version" -O "$version"
 #if [ "$?" == "0" ]; then
