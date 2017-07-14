@@ -24,7 +24,6 @@ local function get_status(name)
 end
 
 o=Map(r,translate("koolproxy"),translate("A powerful advertisement blocker. <br /><font color=\"red\">Adblock Plus Host list + koolproxy Blacklist mode runs without loss of bandwidth due to performance issues.<br /></font>"))
---o.template="koolproxy/index"
 t=o:section(TypedSection,"global",translate("Running Status"))
 t.anonymous=true
 e=t:option(DummyValue,"_status",translate("Transparent Proxy"))
@@ -70,22 +69,9 @@ restart=t:taboption("base",Button,"restart",translate("Manually update the koolp
 restart.inputtitle=translate("Update manually")
 restart.inputstyle="reload"
 restart.write=function()
-	--luci.sys.call("/usr/share/koolproxy/koolproxyupdate rules 2>&1 >/dev/null")
 	luci.sys.call("/usr/share/koolproxy/koolproxyupdate.sh 2>&1 >/dev/null")
 	luci.http.redirect(luci.dispatcher.build_url("admin","services","koolproxy"))
 end
-
---[[
-update=t:taboption("base",Button,"update",translate("程序更新"))
-update.inputtitle=translate("Update manually")
-update.inputstyle="reload"
-update.description=translate(string.format("程序版本：%s", v))
-update.inputstyle="reload"
-update.write=function()
-	luci.sys.call("/usr/share/koolproxy/koolproxyupdate binary 2>&1 >/dev/null")
-	luci.http.redirect(luci.dispatcher.build_url("admin","services","koolproxy"))
-end
---]]
 
 e=t:taboption("base",DummyValue,"status0",translate("程序版本"))
 e.value=string.format("[ %s ]", v)
@@ -191,34 +177,6 @@ e:value("global",translate("Global Filter"))
 e:value("adblock",translate("AdBlock Filter"))
 e:value("ghttps",translate("Global Https Filter"))
 e:value("ahttps",translate("AdBlock Https Filter"))
-
---[[
-t=o:section(TypedSection,"rss_rule",translate("koolproxy 规则订阅"), translate("请确保Koolproxy兼容规则"))
-t.anonymous=true
-t.addremove=true
-t.sortable=true
-t.template="cbi/tblsection"
-e=t:option(Value,"name",translate("规则名称"))
-e.width="10%"
-e.rmempty=false
-e=t:option(Value,"url",translate("规则地址"))
-e.width="55%"
-e.rmempty=false
-e.placeholder="[https|http|ftp]://[Hostname]/[File]"
-function e.validate(self, value)
-	if not value then
-		return nil
-	else
-		return value
-	end
-end
-e=t:option(DummyValue,"time",translate("更新时间"))
-e.width="15%"
-e=t:option(Flag,"load",translate("启用"))
-e.width="10%"
-e.default=0
-e.rmempty=false
---]]
 
 function Download()
 	local t,e
