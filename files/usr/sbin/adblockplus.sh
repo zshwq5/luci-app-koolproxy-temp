@@ -7,13 +7,13 @@ if [ "Z$?" == "Z0" ]; then
 	if [ "Z$?" == "Z0" ]; then
 		echo "$(date "+%F %T"): vokins去广告规则下载完成...."
 		sed -i "s?address\=\/\.?address\=\/?" /tmp/vokins >/dev/null 2>&1
-		sed -i '/qq.com/d' /tmp/vokins >/dev/null 2>&1
+		sed -i '/qq\.com/d' /tmp/vokins >/dev/null 2>&1
 		sed -i '/youku/d' /tmp/vokins >/dev/null 2>&1
 		sed -i '/#/d' /tmp/vokins >/dev/null 2>&1
 		sed -i '$d' /tmp/vokins >/dev/null 2>&1
 		sort -u /tmp/easylistchina /tmp/vokins > /tmp/dnsmasq.adblock
 		rm -f /tmp/vokins /tmp/easylistchina
-		sed -i '/youku.com/d' /tmp/dnsmasq.adblock
+		sed -i '/youku\.com/d' /tmp/dnsmasq.adblock
 		sed -i '1,1d' /tmp/dnsmasq.adblock >/dev/null 2>&1
 		if ( ! cmp -s /tmp/dnsmasq.adblock /usr/share/koolproxy/dnsmasq.adblock ); then
 			echo "$(date "+%F %T"): adblockplus 有更新,开始转换规则!"
