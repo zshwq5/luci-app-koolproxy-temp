@@ -11,10 +11,10 @@ if [ "Z$?" == "Z0" ]; then
 		sed -i '/youku/d' /tmp/vokins >/dev/null 2>&1
 		sed -i '/#/d' /tmp/vokins >/dev/null 2>&1
 		sed -i '$d' /tmp/vokins >/dev/null 2>&1
-		sed -i '1,1d' /tmp/vokins >/dev/null 2>&1
 		sort -u /tmp/easylistchina /tmp/vokins > /tmp/dnsmasq.adblock
 		rm -f /tmp/vokins /tmp/easylistchina
 		sed -i '/youku.com/d' /tmp/dnsmasq.adblock
+		sed -i '1,1d' /tmp/dnsmasq.adblock >/dev/null 2>&1
 		if ( ! cmp -s /tmp/dnsmasq.adblock /usr/share/koolproxy/dnsmasq.adblock ); then
 			echo "$(date "+%F %T"): adblockplus 有更新,开始转换规则!"
 			mv /tmp/dnsmasq.adblock /usr/share/koolproxy/dnsmasq.adblock
@@ -26,9 +26,18 @@ if [ "Z$?" == "Z0" ]; then
 		fi
 	else
 		echo "$(date "+%F %T"): vokins去广告规则下载出错...."
-		rm -f /tmp/easylistchina && exit
+		if [ -f /tmp/easylistchina ]; then
+			rm -f /tmp/easylistchina
+		fi
+		if [ -f /tmp/vokins ]; then
+			rm -f /tmp/vokins
+		fi
+		exit
 	fi
 else
 	echo "$(date "+%F %T"): 获取 adblockplus 规则时出现错误!"
-	[ -f /tmp/easylistchina ] && rm -f /tmp/easylistchina
+	if [ -f /tmp/easylistchina ]; then
+		rm -f /tmp/easylistchina
+	fi
+	exit
 fi
