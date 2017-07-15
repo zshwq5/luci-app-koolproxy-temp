@@ -1,8 +1,9 @@
 #!/bin/sh
 echo "$(date "+%F %T"): 正在下载adblockplus规则....."
 curl -k -s https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt | grep ^\|\|[^\*]*\^$ | sed -e 's:||:address\=\/:' -e 's:\^:/0\.0\.0\.0:' > /tmp/easylistchina
-echo "$(date "+%F %T"): easylistchina 下载完成....."
-curl -k -s https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf > /tmp/vokins
+if [ "Z$?" == "Z0" ]; then
+	echo "$(date "+%F %T"): easylistchina 下载完成....."
+	curl -k -s https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.conf > /tmp/vokins
 	if [ "Z$?" == "Z0" ]; then
 		echo "$(date "+%F %T"): vokins去广告规则下载完成...."
 		sed -i "s?address\=\/\.?address\=\/?" /tmp/vokins >/dev/null 2>&1
@@ -24,6 +25,10 @@ curl -k -s https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.
 			rm -f /tmp/dnsmasq.adblock
 		fi
 	else
-		echo "$(date "+%F %T"): 获取 adblockplus 规则时出现错误!"
-		rm -f /tmp/easylistchina /tmp/vokins
+		echo "$(date "+%F %T"): vokins去广告规则下载出错...."
+		rm -f /tmp/easylistchina && exit
 	fi
+else
+	echo "$(date "+%F %T"): 获取 adblockplus 规则时出现错误!"
+	[ -f /tmp/easylistchina ] && rm -f /tmp/easylistchina
+fi
