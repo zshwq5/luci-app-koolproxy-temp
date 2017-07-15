@@ -24,6 +24,5 @@ curl -k -s https://raw.githubusercontent.com/vokins/yhosts/master/dnsmasq/union.
 		fi
 	else
 		echo "$(date "+%F %T"): 获取 adblockplus 规则时出现错误!"
-		[ -f /tmp/easylistchina ] && rm -f /tmp/easylistchina
-		[ -f /tmp/vokins ] && rm -f /tmp/vokins
+		rm -f /tmp/easylistchina /tmp/vokins
 	fi
