@@ -20,5 +20,8 @@ if [ "Z$?" == "Z0" ]; then
 	fi
 else
 	echo "$(date "+%F %T"): 获取在线规则时出现错误!"
-	[ -f /tmp/vokins ] && rm -f /tmp/vokins
+	if [ -f /tmp/vokins ]; then
+		rm -f /tmp/vokins
+	fi
+	exit
 fi
