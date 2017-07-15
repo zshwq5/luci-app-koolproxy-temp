@@ -14,6 +14,7 @@ local u=luci.sys.exec("head -4 /usr/share/koolproxy/data/rules/koolproxy.txt | g
 local l=luci.sys.exec("grep -v !x /usr/share/koolproxy/data/rules/koolproxy.txt | wc -l")
 local i=luci.sys.exec("cat /usr/share/koolproxy/dnsmasq.adblock | wc -l")
 local h=luci.sys.exec("grep -v '^!' /usr/share/koolproxy/data/rules/user.txt | wc -l")
+local p=luci.sys.exec("cat /usr/share/koolproxy/userlist.conf | wc -l")
 
 local function is_running(name)
 	return luci.sys.call("pidof %s >/dev/null" %{name}) == 0
@@ -56,6 +57,8 @@ e:value("global",translate("Global Filter"))
 e:value("adblock",translate("AdBlock Filter"))
 e=t:taboption("base",Flag,"video_mode",translate("只加载视频规则"))
 e.default=0
+e=t:taboption("base",Flag,"vokins",translate("加载vokins广告规则"))
+e.default=0
 e=t:taboption("base",Flag,"adblock",translate("Open adblock"))
 e.default=0
 e:depends("filter_mode","adblock")
@@ -83,6 +86,8 @@ e=t:taboption("base",DummyValue,"status3",translate("自定规则"))
 e.value=string.format("[ %s]", h)
 e=t:taboption("base",DummyValue,"status4",translate("Host规则"))
 e.value=string.format("[ %s]", i)
+e=t:taboption("base",DummyValue,"status5",translate("vokins广告规则"))
+e.value=string.format("[ %s]", p)
 e=t:taboption("cert",DummyValue,"c1status",translate("<div align=\"left\">Certificate Restore</div>"))
 e=t:taboption("cert",FileUpload,"")
 e.template="koolproxy/caupload"
